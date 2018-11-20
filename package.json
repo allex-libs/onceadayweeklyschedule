@@ -1,0 +1,30 @@
+{
+  "name": "allex_onceadayweeklyschedulelib",
+  "version": "1.0.0",
+  "description": "AllexJS schedule lib that triggers once a day, customizable per day of the week",
+  "main": "index.js",
+  "scripts": {
+    "test": "allex-mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allex-libs/onceadayweeklyschedule.git"
+  },
+  "dependencies": {
+    "allex_nodehelpersserverruntimelib": "1.x",
+    "moment": "2.x",
+    "moment-timezone": "0.5.x"
+  },
+  "keywords": [
+    "ecosystem:AllexJS",
+    "weekly",
+    "schedule",
+    "lib"
+  ],
+  "author": "Andrija Petrovic <andrija.hers@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/allex-libs/onceadayweeklyschedule/issues"
+  },
+  "homepage": "https://github.com/allex-libs/onceadayweeklyschedule#readme"
+}
