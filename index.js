@@ -35,6 +35,13 @@ function createSchedule (execlib) {
       }
     }
   };
+  Schedule.prototype.targetMoment = function (now) {
+    now = now || this.now();
+    return this.timeOfHoursMinutes(now, this.options.time[0], this.options.time[1]);
+  };
+  Schedule.prototype.targetTimestamp = function (now) {
+    return this.targetMoment().toDate().valueOf();
+  };
   Schedule.prototype.estimateDailyTrigger = function () {
     var now = this.now(),
       day = now.day(),
@@ -46,7 +53,7 @@ function createSchedule (execlib) {
       off;
   
     if (this.options.weekdays.indexOf(day)>=0) {
-      target = this.timeOfHoursMinutes(now, this.options.time[0], this.options.time[1]);
+      target = this.targetMoment(now);
       //console.log('diff');
       //console.log('target', target, this.options.time);
       //console.log('   now', now, Schedule.fakeNow);
