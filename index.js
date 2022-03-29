@@ -40,7 +40,7 @@ function createSchedule (execlib) {
     return this.timeOfHoursMinutes(now, this.options.time[0], this.options.time[1]);
   };
   Schedule.prototype.targetTimestamp = function (now) {
-    return this.targetMoment().toDate().valueOf();
+    return this.targetMoment(now).toDate().valueOf();
   };
   Schedule.prototype.estimateDailyTrigger = function () {
     var now = this.now(),
@@ -68,18 +68,25 @@ function createSchedule (execlib) {
     return null;
   };
   Schedule.prototype.now = function () {
-    var now;
+    var now, time;
+    time = this.options ? this.options.time : null;
     if (Schedule.fakeNow) {
-      return momentutils.nowForTime(Schedule.fakeNow.time, Schedule.fakeNow.zone);
+      return momentutils.nowForTime(Schedule.fakeNow.time, Schedule.fakeNow.zone, time);
     }
-    return momentutils.now(this.options ? this.options.timezone : null);
+    return momentutils.now(this.options ? this.options.timezone : null, time);
   };
   Schedule.prototype.timeOfHoursMinutes = function (time, hours, minutes) {
     if (this.options && this.options.timezone) {
       //console.log('copying', time, 'with', hours, minutes, this.options.timezone);
-      return moment.tz({year: time.year(), month: time.month(), day: time.date(), hour: hours, minute: minutes, second: 0, millisecond: 0}, this.options.timezone);
+      return momentutils.possiblyCorrect(
+        moment.tz({year: time.year(), month: time.month(), day: time.date(), hour: hours, minute: minutes, second: 0, millisecond: 0}, this.options.timezone),
+        this.options ? this.options.time : null
+      );
     }
-    return moment({year: time.year(), month: time.month(), day: time.date(), hour: hours, minute: minutes, second: 0, millisecond: 0});
+    return momentutils.possiblyCorrect(
+      moment({year: time.year(), month: time.month(), day: time.date(), hour: hours, minute: minutes, second: 0, millisecond: 0}),
+      this.options ? this.options.time : null
+    );
   };
   Schedule.prototype.currDay = function (format) {
     return (this.now()).format(format||'YYYYMMDD');

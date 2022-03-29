@@ -1,0 +1,16 @@
+{
+    "configurations": [
+        {
+            "name": "Schedule Timing",
+            "request": "launch",
+            "runtimeArgs": [
+                "test/test.scheduletiming.js"
+            ],
+            "runtimeExecutable": "allex-mocha",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "pwa-node"
+        }
+    ]
+}
