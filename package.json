@@ -1,6 +1,6 @@
 {
   "name": "allex_onceadayweeklyschedulelib",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "AllexJS schedule lib that triggers once a day, customizable per day of the week",
   "main": "index.js",
   "scripts": {
