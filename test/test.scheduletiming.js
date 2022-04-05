@@ -47,7 +47,7 @@ function testSchedules (test) {
   });
 }
 
-describe ('Test schedule', function () {
+describe ('Test Schedule Timing', function () {
   it ('Load Schedule Class', function () {
     return setGlobal('ScheduleClass', require('../index')(execlib));
   });

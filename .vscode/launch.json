@@ -11,6 +11,18 @@
                 "<node_internals>/**"
             ],
             "type": "pwa-node"
+        },
+        {
+            "name": "Scheduled For",
+            "request": "launch",
+            "runtimeArgs": [
+                "test/test.scheduledfor.js"
+            ],
+            "runtimeExecutable": "allex-mocha",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "pwa-node"
         }
     ]
 }

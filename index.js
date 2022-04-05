@@ -35,12 +35,16 @@ function createSchedule (execlib) {
       }
     }
   };
-  Schedule.prototype.targetMoment = function (now, skipcorrection) {
-    now = now || this.now(skipcorrection);
-    return this.timeOfHoursMinutes(now, this.options.time[0], this.options.time[1], skipcorrection);
+  Schedule.prototype.targetMoment = function (now) {
+    now = now || this.now();
+    return this.timeOfHoursMinutes(now, this.options.time[0], this.options.time[1]);
   };
-  Schedule.prototype.targetTimestamp = function (now, skipcorrection) {
-    return this.targetMoment(now, skipcorrection).toDate().valueOf();
+  Schedule.prototype.scheduledFor = function () {
+    var tm = this.targetMoment(null);
+    if (this.options && this.options.time && this.options.time.length==2) {
+      tm = tm.add({hours: this.options.time[0], minutes: this.options.time[1]});
+    }
+    return tm.toDate().valueOf();
   };
   Schedule.prototype.estimateDailyTrigger = function () {
     var now = this.now(),
@@ -67,26 +71,26 @@ function createSchedule (execlib) {
     //console.log(now, day, hour, minute);
     return null;
   };
-  Schedule.prototype.now = function (skipcorrection) {
+  Schedule.prototype.now = function () {
     var time;
-    time = skipcorrection ? null : (this.options ? this.options.time : null);
+    time = (this.options ? this.options.time : null);
     if (Schedule.fakeNow) {
       return momentutils.nowForTime(Schedule.fakeNow.time, Schedule.fakeNow.zone, time);
     }
     return momentutils.now(this.options ? this.options.timezone : null, time);
   };
-  Schedule.prototype.timeOfHoursMinutes = function (time, hours, minutes, skipcorrection) {
+  Schedule.prototype.timeOfHoursMinutes = function (time, hours, minutes) {
     var ret;
     if (this.options && this.options.timezone) {
       //console.log('copying', time, 'with', hours, minutes, this.options.timezone);
       return momentutils.possiblyCorrect(
         moment.tz({year: time.year(), month: time.month(), day: time.date(), hour: hours, minute: minutes, second: 0, millisecond: 0}, this.options.timezone),
-        skipcorrection ? null : (this.options ? this.options.time : null)
+        (this.options ? this.options.time : null)
       );
     }
     return momentutils.possiblyCorrect(
       moment({year: time.year(), month: time.month(), day: time.date(), hour: hours, minute: minutes, second: 0, millisecond: 0}),
-      skipcorrection ? null : (this.options ? this.options.time : null)
+      (this.options ? this.options.time : null)
       );
   };
   Schedule.prototype.currDay = function (format) {
